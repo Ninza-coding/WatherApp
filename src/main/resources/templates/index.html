@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Ubuntu", sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right,  #2b40ff, #07121a);
+        }
+
+        .mainContainer {
+            width: 25rem;
+            height: auto;
+            border-radius: 1rem;
+            background: #fff;
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+                        0 10px 10px rgba(0,0,0,0.22);
+        }
+
+        .searchInput {
+            width: 100%;
+            display: flex;
+            padding: 1rem 1rem;
+            justify-content: center;
+        }
+
+        .searchInput input {
+            width: 100%;
+            height: 2rem;
+            outline: none;
+            font-size: 1rem;
+            color: #525050;
+            padding: 0.2rem 0.5rem;
+            border-radius: 1.5rem;
+            border: 1px solid #b3b3b3;
+        }
+
+        .searchInput input:focus {
+            border: 1px solid #9c9dde;
+        }
+
+        .searchInput button {
+            width: 2.2rem;
+            height: 2rem;
+            cursor: pointer;
+            color: #9b9b9b;
+            border-radius: 50%;
+            margin-left: 0.4rem;
+            transition: all 0.3s ease;
+            background-color: #fff;
+            border: 1px solid #b3b3b3;
+        }
+
+        .searchInput button:hover {
+            color: #fff;
+            background-color: #9c9dde;
+            border: 1px solid #9c9dde;
+        }
+
+        .weatherIcon {
+            display: flex;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            justify-content: center;
+        }
+
+        .weatherIcon img {
+            max-width: 100%;
+            width: 8rem;
+        }
+
+        .weatherDetails .temp{
+            font-size: 2rem;
+        }
+
+        .cityDetails {
+            color: #323232;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .cityDetails .date {
+            color: #323232;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .windDetails {
+            display: flex;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+            justify-content: space-around;
+        }
+
+        .windDetails .humidityBox {
+            display: flex;
+            font-size: 1rem;
+            color: #323232;
+        }
+
+        .windDetails .humidity .humidityValue {
+            text-align: center;
+            font-size: 2rem;
+            color: #323232;
+        }
+
+        .windDetails .humidityBox img {
+            max-height: 3rem;
+            margin-right: 0.5rem;
+        }
+
+        .windDetails .windSpeed {
+            display: flex;
+            font-size: 1rem;
+            color: #323232;
+        }
+
+        .windDetails .windSpeed img {
+            max-height: 3rem;
+            margin-right: 0.5rem;
+        }
+
+        .image-logo {
+            height: auto;
+            width: auto;
+            filter: drop-shadow(20px 10px 10px black);
+        }
+    </style>
+</head>
+<body>
+    <div class="mainContainer">
+        <h2 style="text-align: center; padding-top: 20px;">Enter City Name to Get Weather Data</h2>
+        
+        <!-- Form to input city -->
+        <form action="/getWeather" method="POST" class="searchInput">
+            <input type="text" id="city" name="city" placeholder="Enter city" required>
+            <button type="submit">🔍</button>
+        </form>
+        
+        <!-- Display weather data if available -->
+        <div th:if="${city}" class="weatherDetails">
+            <div class="cityDetails">
+                <h3 th:text="${city}">City Name</h3>
+                <p class="date" th:text="${date}">Date</p>
+            </div>
+            <div class="weatherIcon">
+                <!-- Assuming you are getting an icon URL for the weather -->
+                <img src="https://openweathermap.org/img/wn/{icon}.png" alt="Weather Icon" />
+            </div>
+            <div class="temp">
+                <span th:text="${temperature}">Temperature</span>°C
+            </div>
+            <div class="windDetails">
+                <div class="humidityBox">
+                    <img src="humidity-icon.png" alt="Humidity" />
+                    <div class="humidity">
+                        <span class="humidityValue" th:text="${humidity}">Humidity</span>%
+                    </div>
+                </div>
+                <div class="windSpeed">
+                    <img src="wind-icon.png" alt="Wind Speed" />
+                    <div>
+                        <span th:text="${windSpeed}">Wind Speed</span> m/s
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
